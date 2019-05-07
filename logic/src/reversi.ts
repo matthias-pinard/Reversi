@@ -152,11 +152,22 @@ class Reversi {
     }
     return State.Empty;
   }
+
+  play(point: IPoint, color: State) {
+    this.board[point.x][point.y] = color;
+    let nextX = point.x + point.direction.x;
+    let nextY = point.y + point.direction.y;
+    while(this.board[nextX][nextY] == this.get_opposite_color(color)) {
+      this.board[nextX][nextY] = color;
+      nextX += point.direction.x;
+      nextY += point.direction.y;
+    }
+  }
 }
 
 let n: INeighbourg = { coord: [3, 2], direction: [0, 1] };
 const game = new Reversi(8);
-
+game.play({x: 2, y:4, direction: {x:1, y:0}}, State.White)
 console.log(game.board);
 console.log(game.get_possible_movement(State.White));
 

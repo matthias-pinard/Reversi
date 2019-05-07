@@ -130,10 +130,21 @@ var Reversi = /** @class */ (function () {
         }
         return State.Empty;
     };
+    Reversi.prototype.play = function (point, color) {
+        this.board[point.x][point.y] = color;
+        var nextX = point.x + point.direction.x;
+        var nextY = point.y + point.direction.y;
+        while (this.board[nextX][nextY] == this.get_opposite_color(color)) {
+            this.board[nextX][nextY] = color;
+            nextX += point.direction.x;
+            nextY += point.direction.y;
+        }
+    };
     return Reversi;
 }());
 exports.Reversi = Reversi;
 var n = { coord: [3, 2], direction: [0, 1] };
 var game = new Reversi(8);
+game.play({ x: 2, y: 4, direction: { x: 1, y: 0 } }, State.White);
 console.log(game.board);
 console.log(game.get_possible_movement(State.White));
