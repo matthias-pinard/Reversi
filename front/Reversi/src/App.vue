@@ -1,17 +1,29 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <Menu v-if="state === 0" :onclick="play"></Menu>
+    <Board v-if="state ===1"></Board>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import Menu from './components/Menu'
+import Board from './components/Board'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Menu,
+    Board
+  },
+  data: function() {
+    return {
+      state: 0
+    }
+  },
+  methods: {
+    play: function() {
+      this.state = 1
+    }
   }
 }
 </script>
@@ -22,7 +34,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: rgb(144,144,144);
   margin-top: 60px;
+}
+body {
+  background-color: rgb(35,35,35);
 }
 </style>
