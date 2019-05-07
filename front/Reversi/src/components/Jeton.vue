@@ -4,6 +4,8 @@
 </template>
 
 <script>
+import { WHITE, BLACK } from '@/store/commons'
+
 export default {
     props: {
         color: {
@@ -11,6 +13,14 @@ export default {
             type: Number
         }
     },
+    computed: {
+        white () {
+            return this.color === WHITE;
+        },
+        black () {
+            return this.color === BLACK;
+        }
+    }
 }
 </script>
 

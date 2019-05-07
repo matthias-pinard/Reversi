@@ -1,12 +1,11 @@
 <template>
     <div class="contour-plateau">
         <div class="plateau">
-            <!--
             <div 
                 class="cell"
                 v-for="cell in cells"
-                :class="{ playable: cell.isPlayable }"
                 :key="cell.key"
+                :class="{ playable: cell.isPlayable }"
                 @click="play(cell)"
             >
                 <jeton
@@ -14,7 +13,6 @@
                     :color="cell.value"
                 />
             </div>
-            -->
         </div>
     </div>
 </template>
@@ -41,18 +39,17 @@ export default {
             }));
         }
     },
-
-    components: {
-        Jeton
-    }
-
-   /*methods: {
+    methods: {
         play (cell) {
             if (cell.isPlayable) {
                 this.$store.dispatch('play', cell.position);
             }
         }
-   }*/
+    },
+
+    components: {
+        Jeton
+    }
 }
 </script>
 
