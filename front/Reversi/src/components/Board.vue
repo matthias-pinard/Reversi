@@ -1,16 +1,21 @@
 <template>
   <div class="menu">
     <h1>{{ msg }}</h1>
+    <h2>Noir : {{ this.black }} &nbsp;&nbsp;&nbsp; Blanc : {{ this.white }}</h2>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Board',
-  data () {
+  data: function () {
     return {
-      msg: 'test board'
+      msg: 'Test Board'
     }
+  },
+  props: {
+    black: { type: String },
+    white: { type: String }
   }
 }
 </script>

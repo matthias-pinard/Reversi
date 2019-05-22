@@ -13,23 +13,23 @@
           <label>
             <img src="../assets/black.png">
             Black:
-            <select id="black-player-type">
-              <option value="human" selected>Human</option>
-              <option value="computer">AI </option>
+            <select id="black-player-type" v-model="bSelected">
+              <option value="Human" selected>Human </option>
+              <option value="Computer">AI </option>
             </select>
           </label>
           &nbsp;&nbsp;&nbsp;
           <label>
             <img src="../assets/white.png">
             White:
-            <select id="white-player-type">
-              <option value="human">Human</option>
-              <option value="computer" selected>AI </option>
+            <select id="white-player-type" v-model="wSelected">
+              <option value="Human">Human </option>
+              <option value="Computer" selected>AI </option>
             </select>
           </label>
         </div>
         <br />
-        <button id="start-button" class="btn btn-primary" type="submit" @click='onclick'>Start a new game</button>
+        <button id="start-button" class="btn btn-primary" type="submit" @click='onclick(bSelected, wSelected)'>Start a new game</button>
       </div>
   </div>
 </template>
@@ -37,13 +37,15 @@
 <script>
 export default {
   name: 'Menu',
-  data () {
+  data: function () {
     return {
-      msg: 'Reversi'
+      msg: 'Reversi',
+      bSelected: 'Human',
+      wSelected: 'Computer'
     }
   },
   props: {
-      onclick: { type:Function }
+    onclick: { type: Function }
   }
 }
 </script>
