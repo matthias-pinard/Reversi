@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Reversi from "../reversi.js";
+import Reversi from "../../../../logic/built/reversi";
 import Jeton from "./Jeton";
 import Score from "./Score";
 
@@ -54,17 +54,11 @@ export default {
         return element.x === x && element.y === y;
       });
       console.log(playable);
-      //this.reversi.play({x: 1, y: 1}, this.currentPlayer)
-      this.board[x][y] = this.currentPlayer;
-      this.board = this.board.slice();
+      this.reversi.play(playable, this.currentPlayer)
+      this.board = this.reversi.board.slice();
       console.log(this.board);
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
-      if (this.currentPlayer === 2) {
-          this.scoreNoir++
-      }
-      else {
-          this.scoreBlanc++ 
-      }
+      this.displayPossibleMovement()
     },
 
     displayPossibleMovement() {

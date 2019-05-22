@@ -1,17 +1,33 @@
 <template>
   <div id="app">
-    <h1>Reversi</h1>
-    <Board/>
+    <Menu v-if="state === 0" :onclick="play"></Menu>
+    <Board v-if="state ===1" :black="blackPlayer" :white="whitePlayer"></Board>
   </div>
 </template>
 
 <script>
+import Menu from './components/Menu'
 import Board from './components/Board'
 
 export default {
   name: 'App',
   components: {
+    Menu,
     Board
+  },
+  data: function () {
+    return {
+      state: 0,
+      blackPlayer: '',
+      whitePlayer: ''
+    }
+  },
+  methods: {
+    play: function (black, white) {
+      this.blackPlayer = black
+      this.whitePlayer = white
+      this.state = 1
+    }
   }
 }
 </script>
@@ -21,9 +37,11 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-h1 {
   text-align: center;
+  color: rgb(144,144,144);
+  margin-top: 60px;
+}
+body {
+  background-color: rgb(35,35,35);
 }
 </style>
