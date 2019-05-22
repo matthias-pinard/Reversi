@@ -44,7 +44,9 @@ var Reversi = /** @class */ (function () {
             for (var j = 0; j < this.size; j++) {
                 var neighbourgs = this.get_neighbourg(i, j);
                 neighbourgs.map(function (n) {
-                    if (_this.check_line(color, n)) {
+                    if (_this.check_in_board(n.coord) &&
+                        _this.board[n.coord.x][n.coord.y] == 0 &&
+                        _this.check_line(color, n)) {
                         possible_move.push({
                             x: n.coord.x,
                             y: n.coord.y
@@ -78,7 +80,8 @@ var Reversi = /** @class */ (function () {
         }
         var nextPoint = { x: point.x + direction.x, y: point.y + direction.y };
         // The first token is of the opposite color
-        if (this.check_in_board(nextPoint) && this.board[nextPoint.x][nextPoint.y] !== this.get_opposite_color(color)) {
+        if (this.check_in_board(nextPoint) &&
+            this.board[nextPoint.x][nextPoint.y] !== this.get_opposite_color(color)) {
             return false;
         }
         nextPoint.x += direction.x;

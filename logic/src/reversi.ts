@@ -56,12 +56,16 @@ class Reversi {
       for (let j = 0; j < this.size; j++) {
         let neighbourgs = this.get_neighbourg(i, j);
         neighbourgs.map((n: INeighbourg) => {
-          if (this.check_line(color, n)) {
-            possible_move.push({
-              x: n.coord.x,
-              y: n.coord.y
-            });
-          }
+            if (
+              this.check_in_board(n.coord) &&
+              this.board[n.coord.x][n.coord.y] == 0 &&
+              this.check_line(color, n)
+            ) {
+              possible_move.push({
+                x: n.coord.x,
+                y: n.coord.y
+              });
+            }
         });
       }
     }
@@ -87,7 +91,7 @@ class Reversi {
     return neighbourgs;
   }
 
-  check_line(color: State, neighbourg: INeighbourg) {    
+  check_line(color: State, neighbourg: INeighbourg) {
     const direction = neighbourg.direction;
     const point = neighbourg.coord;
     if (!this.check_in_board(point)) {
@@ -96,7 +100,10 @@ class Reversi {
 
     let nextPoint = { x: point.x + direction.x, y: point.y + direction.y };
     // The first token is of the opposite color
-    if (this.check_in_board(nextPoint) && this.board[nextPoint.x][nextPoint.y] !== this.get_opposite_color(color)) {
+    if (
+      this.check_in_board(nextPoint) &&
+      this.board[nextPoint.x][nextPoint.y] !== this.get_opposite_color(color)
+    ) {
       return false;
     }
 
@@ -108,7 +115,9 @@ class Reversi {
     }
 
     // any number of token can be of the opposite color
-    while (this.board[nextPoint.x][nextPoint.y] == this.get_opposite_color(color)) {
+    while (
+      this.board[nextPoint.x][nextPoint.y] == this.get_opposite_color(color)
+    ) {
       nextPoint.x += direction.x;
       nextPoint.y += nextPoint.y;
       if (!this.check_in_board(nextPoint)) {
@@ -134,9 +143,9 @@ class Reversi {
   play(point: IPoint, color: State) {
     this.board[point.x][point.y] = color;
     directions.map(direction => {
-      const neighbourg = {coord: point, direction: direction};
-      this.check_and_capture(neighbourg, color)
-    })
+      const neighbourg = { coord: point, direction: direction };
+      this.check_and_capture(neighbourg, color);
+    });
   }
 
   check_and_capture(neigbourg: INeighbourg, color: State) {
