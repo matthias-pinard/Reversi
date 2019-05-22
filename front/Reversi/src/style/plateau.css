@@ -1,0 +1,32 @@
+.contour-plateau {
+    width: 50vw;
+    height: 50vw;
+    border: 12px solid #6D5720;
+    border-radius: 12px;
+    margin: 0 auto;
+    min-width: 300px;
+    min-height: 300px;
+    max-width: 700px;
+    max-height: 700px;
+}
+
+.plateau {
+    width: 100%;
+    height: 100%;
+    background: #6C9A33;
+    display: grid;
+    grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+    grid-template-rows: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+}
+
+.cell {
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 1px 1px 0 #94C160, inset -1px -1px 0 #477413;
+    display: flex;
+}
+
+.playable {
+    background: #C4E79A;
+    cursor: pointer;
+}
