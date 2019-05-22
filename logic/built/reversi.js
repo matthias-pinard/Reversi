@@ -11,6 +11,17 @@ var Color;
     Color[Color["Black"] = 0] = "Black";
     Color[Color["White"] = 1] = "White";
 })(Color || (Color = {}));
+var directions = [
+    { x: -1, y: -1 },
+    { x: 0, y: 1 },
+    { x: 1, y: 1 },
+    { x: 1, y: 0 },
+    { x: 1, y: -1 },
+    { x: 0, y: 1 },
+    { x: -1, y: -1 },
+    { x: -1, y: 0 },
+    { x: -1, y: 1 }
+];
 var Reversi = /** @class */ (function () {
     function Reversi(size) {
         this.size = size;
@@ -36,8 +47,7 @@ var Reversi = /** @class */ (function () {
                     if (_this.check_line(color, n)) {
                         possible_move.push({
                             x: n.coord[0],
-                            y: n.coord[1],
-                            direction: { x: n.direction[0], y: n.direction[1] }
+                            y: n.coord[1]
                         });
                     }
                 });
@@ -45,39 +55,19 @@ var Reversi = /** @class */ (function () {
         }
         return possible_move;
     };
+    Reversi.prototype.check_in_board = function (point) {
+        return (point.x < this.size && point.x >= 0 && point.y < this.size && point.y >= 0);
+    };
     Reversi.prototype.get_neighbourg = function (i, j) {
+        var _this = this;
         var neighbourgs = [];
-        //1
-        if (i - 1 > 0 && j - 1 > 0) {
-            neighbourgs.push({ coord: [i - 1, j - 1], direction: [-1, -1] });
-        }
-        //2
-        if (i - 1 > 0) {
-            neighbourgs.push({ coord: [i - 1, j], direction: [-1, 0] });
-        }
-        //3
-        if (i - 1 > 0 && j + 1 < this.size) {
-            neighbourgs.push({ coord: [i - 1, j + 1], direction: [-1, 1] });
-        }
-        //4
-        if (j - 1 > 0) {
-            neighbourgs.push({ coord: [i, j - 1], direction: [0, -1] });
-        }
-        //5
-        if (i + 1 < this.size && j - 1 > 0) {
-            neighbourgs.push({ coord: [i + 1, j - 1], direction: [1, -1] });
-        }
-        //6
-        if (i + 1 < this.size) {
-            neighbourgs.push({ coord: [i + 1, j], direction: [1, 0] });
-        }
-        //7
-        if (i + 1 < this.size && j + 1 < this.size) {
-            neighbourgs.push({ coord: [i + 1, j + 1], direction: [1, 1] });
-        }
-        if (j + 1 < this.size) {
-            neighbourgs.push({ coord: [i, j + 1], direction: [0, 1] });
-        }
+        directions.map(function (direction) {
+            var point = { x: i + direction[0], y: j + direction[1] };
+            if (_this.check_in_board(point)) {
+                var n_1 = { coord: point, direction: direction };
+                neighbourgs.push(n_1);
+            }
+        });
         return neighbourgs;
     };
     Reversi.prototype.is_in_board = function (coord) {
@@ -92,8 +82,8 @@ var Reversi = /** @class */ (function () {
     Reversi.prototype.check_line = function (color, point) {
         var direction = point.direction;
         var coord = [
-            point.coord[0] + direction[0],
-            point.coord[1] + direction[1]
+            point.coord.x + direction.x,
+            point.coord.y + direction.y
         ];
         if (!this.is_in_board([coord[0], coord[1]])) {
             return false;
@@ -132,19 +122,24 @@ var Reversi = /** @class */ (function () {
     };
     Reversi.prototype.play = function (point, color) {
         this.board[point.x][point.y] = color;
-        var nextX = point.x + point.direction.x;
-        var nextY = point.y + point.direction.y;
-        while (this.board[nextX][nextY] == this.get_opposite_color(color)) {
-            this.board[nextX][nextY] = color;
-            nextX += point.direction.x;
-            nextY += point.direction.y;
+    };
+    Reversi.prototype.check_and_capture = function (neigbourg, color) {
+        var point = neigbourg.coord;
+        this.board[point.x][point.y] = color;
+        var nextX = point.x + neigbourg.direction.x;
+        var nextY = point.y + neigbourg.direction.y;
+        if (this.check_line(color, neigbourg)) {
+            this.board[point.x][point.y] = color;
+            var nextX_1 = point.x + neigbourg.direction.x;
+            var nextY_1 = point.y + neigbourg.direction.y;
         }
     };
     return Reversi;
 }());
 exports.Reversi = Reversi;
-var n = { coord: [3, 2], direction: [0, 1] };
+var n = { coord: { x: 3, y: 2 }, direction: { x: 0, y: 1 } };
 var game = new Reversi(8);
-game.play({ x: 2, y: 4, direction: { x: 1, y: 0 } }, State.White);
+console.log(game.get_possible_movement(State.White));
+game.play({ x: 3, y: 2 }, State.White);
 console.log(game.board);
 console.log(game.get_possible_movement(State.White));
