@@ -1,20 +1,17 @@
 <template>
   <div id="app">
     <h1>Reversi</h1>
-    <plateau/>
-    <dashboard/>
+    <Board/>
   </div>
 </template>
 
 <script>
-import Plateau from './components/Plateau'
-import Dashboard from './components/Dashboard'
+import Board from './components/Board'
 
 export default {
   name: 'App',
   components: {
-    Plateau,
-    Dashboard
+    Board
   }
 }
 </script>
