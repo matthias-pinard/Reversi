@@ -19,16 +19,16 @@ interface INeighbourg {
   direction: IPoint;
 }
 
-const directions = [
-  {x: -1, y: -1},
-  {x: 0, y: 1},
-  {x: 1, y: 1},
-  {x: 1, y: 0},
-  {x: 1, y: -1},
-  {x: 0, y: 1},
-  {x: -1, y: -1},
-  {x: -1, y: 0},
-  {x: -1, y: 1}
+const directions: IPoint[] = [
+  { x: -1, y: -1 },
+  { x: 0, y: 1 },
+  { x: 1, y: 1 },
+  { x: 1, y: 0 },
+  { x: 1, y: -1 },
+  { x: 0, y: 1 },
+  { x: -1, y: -1 },
+  { x: -1, y: 0 },
+  { x: -1, y: 1 }
 ];
 
 class Reversi {
@@ -58,8 +58,8 @@ class Reversi {
         neighbourgs.map((n: INeighbourg) => {
           if (this.check_line(color, n)) {
             possible_move.push({
-              x: n.coord[0],
-              y: n.coord[1]
+              x: n.coord.x,
+              y: n.coord.y
             });
           }
         });
@@ -78,58 +78,45 @@ class Reversi {
   get_neighbourg(i: number, j: number): INeighbourg[] {
     let neighbourgs: INeighbourg[] = [];
     directions.map(direction => {
-      const point = {x: i + direction[0], y: j + direction[1]};
-      if(this.check_in_board(point)) {
-        const n = {coord: point, direction: direction};
-        neighbourgs.push(n)
+      const point = { x: i + direction.x, y: j + direction.y };
+      if (this.check_in_board(point)) {
+        const n = { coord: point, direction: direction };
+        neighbourgs.push(n);
       }
-
     });
     return neighbourgs;
   }
 
-  is_in_board(coord: [number, number]): boolean {
-    if (
-      coord[0] >= this.size ||
-      coord[0] < 0 ||
-      coord[1] >= this.size ||
-      coord[1] < 0
-    ) {
+  check_line(color: State, neighbourg: INeighbourg) {    
+    const direction = neighbourg.direction;
+    const point = neighbourg.coord;
+    if (!this.check_in_board(point)) {
       return false;
     }
-    return true;
-  }
 
-  check_line(color: State, point: INeighbourg) {
-    const direction = point.direction;
-    let coord: [number, number] = [
-      point.coord.x + direction.x,
-      point.coord.y + direction.y
-    ];
-    if (!this.is_in_board([coord[0], coord[1]])) {
-      return false;
-    }
+    let nextPoint = { x: point.x + direction.x, y: point.y + direction.y };
     // The first token is of the opposite color
-    if (this.board[coord[0]][coord[1]] !== this.get_opposite_color(color)) {
+    if (this.check_in_board(nextPoint) && this.board[nextPoint.x][nextPoint.y] !== this.get_opposite_color(color)) {
       return false;
     }
-    coord[0] += direction[0];
-    coord[1] += direction[1];
 
-    if (!this.is_in_board([coord[0], coord[1]])) {
+    nextPoint.x += direction.x;
+    nextPoint.y += direction.y;
+
+    if (!this.check_in_board(nextPoint)) {
       return false;
     }
 
     // any number of token can be of the opposite color
-    while (this.board[coord[0]][coord[1]] == this.get_opposite_color(color)) {
-      coord[0] += direction[0];
-      coord[1] += direction[1];
-      if (!this.is_in_board([coord[0], coord[1]])) {
+    while (this.board[nextPoint.x][nextPoint.y] == this.get_opposite_color(color)) {
+      nextPoint.x += direction.x;
+      nextPoint.y += nextPoint.y;
+      if (!this.check_in_board(nextPoint)) {
         return false;
       }
     }
     // the last token is of the player color
-    if (this.board[coord[0]][coord[1]] === color) {
+    if (this.board[nextPoint.x][nextPoint.y] === color) {
       return true;
     }
     return false;
@@ -146,28 +133,33 @@ class Reversi {
 
   play(point: IPoint, color: State) {
     this.board[point.x][point.y] = color;
-  
+    directions.map(direction => {
+      const neighbourg = {coord: point, direction: direction};
+      this.check_and_capture(neighbourg, color)
+    })
   }
 
   check_and_capture(neigbourg: INeighbourg, color: State) {
     const point = neigbourg.coord;
-    this.board[point.x][point.y] = color;
     let nextX = point.x + neigbourg.direction.x;
     let nextY = point.y + neigbourg.direction.y;
     if (this.check_line(color, neigbourg)) {
-      this.board[point.x][point.y] = color;
-      let nextX = point.x + neigbourg.direction.x;
-      let nextY = point.y + neigbourg.direction.y;
+      while (this.board[nextX][nextY] == this.get_opposite_color(color)) {
+        this.board[nextX][nextY] = color;
+        nextX += neigbourg.direction.x;
+        nextY += neigbourg.direction.y;
+      }
     }
   }
 }
 
-let n: INeighbourg = { coord: {x:3, y:2}, direction: {x:0, y:1} };
-const game = new Reversi(8);
-console.log(game.get_possible_movement(State.White));
+// let n: INeighbourg = { coord: { x: 2, y: 3 }, direction: { x: 1, y: 0 } };
+// const game = new Reversi(8);
+// console.log(game.get_possible_movement(State.Black));
 
-game.play({ x: 3, y: 2}, State.White);
-console.log(game.board);
-console.log(game.get_possible_movement(State.White));
+// game.play({ x: 2, y: 3 }, State.Black);
+// console.log(game.board);
+// // console.log(game.get_possible_movement(State.White));
+// console.log(game.check_line(State.Black, n))
 
 export { Reversi };
