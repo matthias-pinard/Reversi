@@ -20,8 +20,10 @@
 export default {
     props: {
         current_player: { type: Number },
-        scoreNoir: {type : Number },
-        scoreBlanc: {type : Number }
+        scoreNoir: { type: Number },
+        scoreBlanc: { type: Number },
+        blackPlayer: { type: String },
+        whitePlayer: { type: String }
     }
 };
 </script>
