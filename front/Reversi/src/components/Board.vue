@@ -10,7 +10,7 @@
             :class="{ playable: checkPlayable(x, y) }"
             @click="play(x, y)"
           >
-            <jeton :color="cell" v-if="cell !== 0"></jeton>
+            <jeton :color="cell" :last="isLast(x, y)" v-if="cell !== 0"></jeton>
           </div>
         </div>
       </div>
@@ -41,7 +41,11 @@ export default {
       blackBlocked: false,
       highestScore: 0,
       winner: "",
-      equality: false
+      equality: false,
+      last: {
+        x: null,
+        y: null
+      }
     };
   },
 
@@ -65,6 +69,10 @@ export default {
       }
     },
 
+    isLast (x, y) {
+      return x === this.last.x && y === this.last.y
+    },
+
     play(x, y) {
       const playable = this.possibilies.find(function(element) {
         return element.x === x && element.y === y;
@@ -75,6 +83,10 @@ export default {
       this.scoreNoir = this.reversi.get_score(1)
       this.scoreBlanc = this.reversi.get_score(2)
       this.displayPossibleMovement()
+      this.last = {
+        x: x,
+        y: y
+      }
     },
 
     displayPossibleMovement() {
