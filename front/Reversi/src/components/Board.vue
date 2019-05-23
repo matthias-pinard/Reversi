@@ -75,9 +75,9 @@ export default {
           if (this.reversi.get_score(BLACK) === this.reversi.get_score(WHITE)) {
             this.equality = true;
           } else if (this.reversi.get_score(BLACK) === this.highestScore) {
-            this.winner = "Noir"
+            this.winner = "Blue" //"Black"
           } else {
-            this.winner = "Blanc"
+            this.winner = "Orange" //"White"
           }
         }
         this.blackBlocked = true;
@@ -91,9 +91,9 @@ export default {
           if (this.reversi.get_score(BLACK) === this.reversi.get_score(WHITE)) {
             this.equality = true;
           } else if (this.reversi.get_score(BLACK) === this.highestScore) {
-            this.winner = "Noir"
+            this.winner = "Blue" //"Black"
           } else {
-            this.winner = "Blanc"
+            this.winner = "Orange" //"White"
           }
         }
         this.whiteBlocked = true;
