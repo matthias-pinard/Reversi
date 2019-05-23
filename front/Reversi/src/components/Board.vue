@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="board-container">
-      <div class="board">
+      <div :class="'board'+this.boardSize">
         <div v-for="(row, x) in board" :key="x">
           <div
             class="cell"
@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :winner="winner"></Score>
+    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :winner="winner" :equality='equality'></Score>
   </div>
 </template>
 
@@ -41,7 +41,8 @@ export default {
       whiteBlocked: false,
       blackBlocked: false,
       highestScore: 0,
-      winner: ""
+      winner: "",
+      equality: false
     };
   },
 
@@ -71,7 +72,13 @@ export default {
       if (this.possibilies.length === 0 && this.currentPlayer === 1){
         if (this.whiteBlocked === true) {
           this.highestScore = Math.max(this.reversi.get_score(BLACK), this.reversi.get_score(WHITE))
-          this.winner = (this.reversi.get_score(BLACK) === this.highestScore) ? "Noir" : "Blanc";
+          if (this.reversi.get_score(BLACK) === this.reversi.get_score(WHITE)) {
+            this.equality = true;
+          } else if (this.reversi.get_score(BLACK) === this.highestScore) {
+            this.winner = "Blue" //"Black"
+          } else {
+            this.winner = "Orange" //"White"
+          }
         }
         this.blackBlocked = true;
         this.currentPlayer = 2;
@@ -81,7 +88,13 @@ export default {
       } else if (this.possibilies.length === 0 && this.currentPlayer === 2){
         if (this.blackBlocked === true) {
           this.highestScore = Math.max(this.reversi.get_score(BLACK), this.reversi.get_score(WHITE))
-          this.winner = (this.reversi.get_score(BLACK) === this.highestScore) ? "Noir" : "Blanc";
+          if (this.reversi.get_score(BLACK) === this.reversi.get_score(WHITE)) {
+            this.equality = true;
+          } else if (this.reversi.get_score(BLACK) === this.highestScore) {
+            this.winner = "Blue" //"Black"
+          } else {
+            this.winner = "Orange" //"White"
+          }
         }
         this.whiteBlocked = true;
         this.currentPlayer = 1;
