@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :highestScore="highestScore" :winner="winner"></Score>
+    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :winner="winner"></Score>
   </div>
 </template>
 
@@ -69,25 +69,23 @@ export default {
       this.possibilies = this.reversi.get_possible_movement(this.currentPlayer).slice()
 
       if (this.possibilies.length === 0 && this.currentPlayer === 1){
-        console.log("noir")
         if (this.whiteBlocked === true) {
-          highestScore = Math.max(this.reversi.get_score(black), this.reversi.get_score(white))
-          winner = (this.reversi.get_score(black) === highestScore) ? "Black player" : "White player";
+          this.highestScore = Math.max(this.reversi.get_score(BLACK), this.reversi.get_score(WHITE))
+          this.winner = (this.reversi.get_score(BLACK) === this.highestScore) ? "Noir" : "Blanc";
         }
         this.blackBlocked = true;
         this.currentPlayer = 2;
-        if (!this.blackBlocked && !this.whiteBlocked) {
+        if (!(this.blackBlocked && this.whiteBlocked)) {
           this.displayPossibleMovement();
         }
       } else if (this.possibilies.length === 0 && this.currentPlayer === 2){
-        console.log("blanc")
         if (this.blackBlocked === true) {
-          highestScore = Math.max(this.reversi.get_score(black), this.reversi.get_score(white))
-          winner = (this.reversi.get_score(black) === highestScore) ? "Black player" : "White player";
+          this.highestScore = Math.max(this.reversi.get_score(BLACK), this.reversi.get_score(WHITE))
+          this.winner = (this.reversi.get_score(BLACK) === this.highestScore) ? "Noir" : "Blanc";
         }
         this.whiteBlocked = true;
         this.currentPlayer = 1;
-        if (!this.blackBlocked && !this.whiteBlocked) {
+        if (!(this.blackBlocked && this.whiteBlocked)) {
           this.displayPossibleMovement();
         }
       } else {

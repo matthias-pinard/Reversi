@@ -6,12 +6,13 @@
         <h2 :class=" { current_player : this.current_player === 1 }">Bleu</h2>
         <div class="score_player">{{ scoreNoir }}</div>
       </div>
+      <div v-if="this.winner !== ''">
+        <h3>Gagnant : {{ winner }}</h3>
+      </div>
       <div>
         <h2 :class=" { current_player : this.current_player === 2 }">Orange</h2>
-
         <div class="score_player">{{ scoreBlanc }}</div>
       </div>
-      {{ winner }} {{ highestScore }}
     </div>
   </div>
 </template>
@@ -26,7 +27,6 @@ export default {
         scoreBlanc: { type: Number },
         blackPlayer: { type: String },
         whitePlayer: { type: String },
-        highestScore: { type: Number },
         winner: { type: String }
     }
 };
