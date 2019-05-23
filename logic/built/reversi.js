@@ -38,7 +38,11 @@ var Reversi = /** @class */ (function () {
             this.board[size / 2][size / 2 - 1] = State.Black;
         }
         else if (typeof size == "object") {
-            this.board = size.slice();
+            this.board = [];
+            for (var i = 0; i < size.length; i++) {
+                this.board.push(size[i].slice());
+                this.size = size.length;
+            }
         }
     }
     Reversi.prototype.get_possible_movement = function (color) {
@@ -160,5 +164,3 @@ var Reversi = /** @class */ (function () {
     return Reversi;
 }());
 exports.Reversi = Reversi;
-// let n: INeighbourg = { coord: { x: 2, y: 3 }, direction: { x: 1, y: 0 } };
-var game = new Reversi(8);

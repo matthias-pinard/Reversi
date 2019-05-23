@@ -34,7 +34,7 @@ class Heuristic {
     ];
   }
 
-  evaluate = function(board, color) {
+  evaluate(board: State[][], color :State) :number{
     return (
       this.parity(board, color) +
       this.mobility(board, color) +
@@ -69,14 +69,14 @@ class Heuristic {
     let cCurr =  game.get_score(color)
     let oppColor = color == State.Black ? State.White : State.Black;
     let cOpp = game.get_score(oppColor);
-
+    let score = ((100 * (cCurr - cOpp)) / (cCurr + cOpp)) * this.PARITY_WEIGHT;
     if (cCurr > cOpp) {
-      return -((100 * (cCurr - cOpp)) / (cCurr + cOpp)) * this.PARITY_WEIGHT;
+      return -score;
     }
-    return (100 * (cCurr - cOpp)) / (cCurr + cOpp);
+    return score;
   }
 
-  mobility = function(color, board) {
+  mobility(board, color) {
     let game = new Reversi(board);
     let moCurr = game.get_possible_movement(color).length;
     let oppColor = color == State.Black ? State.White : State.Black;
@@ -87,7 +87,8 @@ class Heuristic {
       );
     else return 0;
   };
-  corners = function(board, color) {
+
+  corners(board, color) {
     let corCurr = 0;
     let corOpp = 0;
     for (let i = 0; i < 8; i += 7) {
@@ -129,5 +130,8 @@ class Heuristic {
   }
 
 }
-
 export {Heuristic};
+
+let game = new Reversi(8);
+let h = new Heuristic();
+console.log(h.evaluate(game.board, State.Black))

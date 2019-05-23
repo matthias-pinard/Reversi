@@ -39,7 +39,7 @@ class Reversi {
   constructor(size: number);
   constructor(board: object);
   constructor(size: any) {
-    if(typeof size == "number") {
+    if (typeof size == "number") {
       this.size = size;
       this.board = [];
       for (let i = 0; i < size; i++) {
@@ -52,8 +52,12 @@ class Reversi {
       this.board[size / 2][size / 2] = State.White;
       this.board[size / 2 - 1][size / 2] = State.Black;
       this.board[size / 2][size / 2 - 1] = State.Black;
-    } else if(typeof size == "object") {
-      this.board = size.slice();
+    } else if (typeof size == "object") {
+      this.board = [];
+      for(let i = 0; i < size.length; i++) {
+        this.board.push(size[i].slice())
+        this.size = size.length
+      }
     }
   }
 
@@ -194,7 +198,11 @@ class Reversi {
 }
 
 // let n: INeighbourg = { coord: { x: 2, y: 3 }, direction: { x: 1, y: 0 } };
-const game = new Reversi(8);
+// const game = new Reversi(8);
+// let board = [[1,0],[0,2]]
+// const game = new Reversi(board);
+// console.log(game.board)
+
 // console.log(game.get_possible_movement(State.Black));
 
 // console.log(game.board);
