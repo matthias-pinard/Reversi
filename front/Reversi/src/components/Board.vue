@@ -42,7 +42,7 @@ export default {
   },
 
   mounted: function() {
-    const rev = require("../reversi").Reversi;
+    const rev = require("../../../../logic/built/reversi").Reversi;
     this.reversi = new rev(8);
     this.board = this.reversi.board.slice();
     this.displayPossibleMovement();
