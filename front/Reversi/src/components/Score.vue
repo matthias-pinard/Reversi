@@ -3,11 +3,12 @@
     <h1>Score</h1>
     <div class="score_container">
       <div>
-        <h2 :class=" { current_player : this.current_player === 1 }">Noir</h2>
+        <h2 :class=" { current_player : this.current_player === 1 }">Bleu</h2>
         <div class="score_player">{{ scoreNoir }}</div>
       </div>
       <div>
-        <h2 :class=" { current_player : this.current_player === 2 }">Blanc</h2>
+        <h2 :class=" { current_player : this.current_player === 2 }">Orange</h2>
+
         <div class="score_player">{{ scoreBlanc }}</div>
       </div>
     </div>

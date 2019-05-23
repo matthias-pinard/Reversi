@@ -56,6 +56,8 @@ export default {
       this.reversi.play(playable, this.currentPlayer)
       this.board = this.reversi.board.slice();
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+      this.scoreNoir = this.reversi.get_score(1)
+      this.scoreBlanc = this.reversi.get_score(2)
       this.displayPossibleMovement()
     },
 
