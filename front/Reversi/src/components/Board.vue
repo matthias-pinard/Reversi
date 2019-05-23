@@ -24,6 +24,7 @@
       :winner="winner"
       :equality="equality"
     ></Score>
+    <button id="restart-button" class="btn btn-primary" type="submit" @click='onclick()'>Restart</button>
   </div>
 </template>
 
@@ -178,7 +179,8 @@ export default {
   props: {
     boardSize: { type: Number },
     blackPlayer: { type: String },
-    whitePlayer: { type: String }
+    whitePlayer: { type: String },
+    onclick: { type: Function }
   }
 };
 </script>
