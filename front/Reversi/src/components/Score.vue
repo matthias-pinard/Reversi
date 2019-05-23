@@ -10,6 +10,7 @@
         <h2 :class=" { current_player : this.current_player === 2 }">Blanc</h2>
         <div class="score_player">{{ scoreBlanc }}</div>
       </div>
+      {{ winner }} {{ highestScore }}
     </div>
   </div>
 </template>
@@ -23,7 +24,9 @@ export default {
         scoreNoir: { type: Number },
         scoreBlanc: { type: Number },
         blackPlayer: { type: String },
-        whitePlayer: { type: String }
+        whitePlayer: { type: String },
+        highestScore: { type: Number },
+        winner: { type: String }
     }
 };
 </script>

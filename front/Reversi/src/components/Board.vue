@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer"></Score>
+    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :highestScore="highestScore" :winner="winner"></Score>
   </div>
 </template>
 
@@ -38,6 +38,10 @@ export default {
       board: [],
       scoreNoir: 2,
       scoreBlanc: 2,
+      whiteBlocked: false,
+      blackBlocked: false,
+      highestScore: 0,
+      winner: ""
     };
   },
 
@@ -60,7 +64,34 @@ export default {
     },
 
     displayPossibleMovement() {
-      this.possibilies = this.reversi.get_possible_movement(this.currentPlayer).slice();
+      this.possibilies = this.reversi.get_possible_movement(this.currentPlayer).slice()
+
+      if (this.possibilies.length === 0 && this.currentPlayer === 1){
+        console.log("noir")
+        if (this.whiteBlocked === true) {
+          highestScore = Math.max(this.reversi.get_score(black), this.reversi.get_score(white))
+          winner = (this.reversi.get_score(black) === highestScore) ? "Black player" : "White player";
+        }
+        this.blackBlocked = true;
+        this.currentPlayer = 2;
+        if (!this.blackBlocked && !this.whiteBlocked) {
+          this.displayPossibleMovement();
+        }
+      } else if (this.possibilies.length === 0 && this.currentPlayer === 2){
+        console.log("blanc")
+        if (this.blackBlocked === true) {
+          highestScore = Math.max(this.reversi.get_score(black), this.reversi.get_score(white))
+          winner = (this.reversi.get_score(black) === highestScore) ? "Black player" : "White player";
+        }
+        this.whiteBlocked = true;
+        this.currentPlayer = 1;
+        if (!this.blackBlocked && !this.whiteBlocked) {
+          this.displayPossibleMovement();
+        }
+      } else {
+        this.blackBlocked = false;
+        this.whiteBlocked = false;
+      }
     },
 
     checkPlayable: function(x, y) {
