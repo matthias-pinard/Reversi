@@ -28,6 +28,13 @@ h2 {
 
 .current_player_2 {
     font-weight: bold;
+    background: rgb(255,115,0);
+    color: rgb(35,35,35);
+}
+
+.current_player_2_win {
+    font-weight: bold;
+    color: rgb(35,35,35);
     animation: blink_orange 1s linear infinite;
 }
 
@@ -38,5 +45,12 @@ h2 {
 
 .current_player_1 {
     font-weight: bold;
+    background: rgb(30,79,134);
+    color: rgb(35,35,35);
+}
+
+.current_player_1_win {
+    font-weight: bold;
+    color: rgb(35,35,35);
     animation: blink_blue 1s linear infinite;
 }
