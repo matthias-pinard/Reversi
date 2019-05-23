@@ -174,6 +174,16 @@ class Reversi {
       }
     }
   }
+
+  get_score(color: State): number {
+    let score = 0;
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if(this.board[i][j] == color) {
+          score++;
+        }
+      }
+  }
 }
 
 // let n: INeighbourg = { coord: { x: 2, y: 3 }, direction: { x: 1, y: 0 } };
