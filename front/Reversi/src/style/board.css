@@ -10,7 +10,25 @@
     max-height: 700px;
 }
 
-.board {
+.board4 {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto auto;
+    width: 100%;
+    height: 100%;
+    background: gray;
+}
+
+.board6 {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto;
+    width: 100%;
+    height: 100%;
+    background: gray;
+}
+
+.board8 {
     display: grid;
     grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
     grid-template-rows: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
