@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Menu v-if="state === 0" :onclick="play"></Menu>
-    <Board v-if="state ===1" :black="blackPlayer" :white="whitePlayer"></Board>
+    <Board v-if="state ===1" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :boardSize="boardSize"></Board>
   </div>
 </template>
 
@@ -19,13 +19,15 @@ export default {
     return {
       state: 0,
       blackPlayer: '',
-      whitePlayer: ''
+      whitePlayer: '',
+      boardSize: ''
     }
   },
   methods: {
-    play: function (black, white) {
+    play: function (black, white, size) {
       this.blackPlayer = black
       this.whitePlayer = white
+      this.boardSize = size
       this.state = 1
     }
   }

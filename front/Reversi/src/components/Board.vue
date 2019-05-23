@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc"></Score>
+    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer"></Score>
   </div>
 </template>
 
@@ -37,13 +37,18 @@ export default {
       possibilies: [],
       board: [],
       scoreNoir: 2,
-      scoreBlanc: 2
+      scoreBlanc: 2,
     };
   },
 
   mounted: function() {
+<<<<<<< HEAD
     const rev = require("../../../../logic/built/reversi").Reversi;
     this.reversi = new rev(8);
+=======
+    const rev = require("../reversi").Reversi;
+    this.reversi = new rev(this.boardSize);
+>>>>>>> f11890c7dcd2d8aabfa5b8c7b7d8f3e2128b2b4e
     this.board = this.reversi.board.slice();
     this.displayPossibleMovement();
   },
@@ -74,6 +79,12 @@ export default {
   components: {
     Jeton,
     Score
+  },
+
+  props: {
+     boardSize: { type: Number },
+     blackPlayer: { type: String },
+     whitePlayer: { type: String }
   }
 };
 </script>
