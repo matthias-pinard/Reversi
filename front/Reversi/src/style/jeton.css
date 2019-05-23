@@ -11,3 +11,7 @@
 .black {
     background: rgb(30, 79, 134);
 }
+
+.last {
+    box-shadow: 3px 3px 5px white;
+}

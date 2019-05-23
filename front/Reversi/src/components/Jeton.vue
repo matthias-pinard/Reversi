@@ -1,5 +1,5 @@
 <template>
-    <div class="jeton" :class="{ white, black }">
+    <div class="jeton" :class="{ white, black, last }">
     </div>
 </template>
 
@@ -11,6 +11,9 @@ export default {
         color: {
             required: true,
             type: Number
+        },
+        last: {
+            type: Boolean
         }
     },
     computed: {
@@ -19,7 +22,8 @@ export default {
         },
         black () {
             return this.color === BLACK;
-        }
+        },
+
     }
 }
 </script>

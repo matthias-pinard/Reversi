@@ -23,18 +23,23 @@ var directions = [
 ];
 var Reversi = /** @class */ (function () {
     function Reversi(size) {
-        this.size = size;
-        this.board = [];
-        for (var i = 0; i < size; i++) {
-            this.board.push([]);
-            for (var j = 0; j < size; j++) {
-                this.board[i].push(State.Empty);
+        if (typeof size == "number") {
+            this.size = size;
+            this.board = [];
+            for (var i = 0; i < size; i++) {
+                this.board.push([]);
+                for (var j = 0; j < size; j++) {
+                    this.board[i].push(State.Empty);
+                }
             }
+            this.board[size / 2 - 1][size / 2 - 1] = State.White;
+            this.board[size / 2][size / 2] = State.White;
+            this.board[size / 2 - 1][size / 2] = State.Black;
+            this.board[size / 2][size / 2 - 1] = State.Black;
         }
-        this.board[size / 2 - 1][size / 2 - 1] = State.White;
-        this.board[size / 2][size / 2] = State.White;
-        this.board[size / 2 - 1][size / 2] = State.Black;
-        this.board[size / 2][size / 2 - 1] = State.Black;
+        else if (typeof size == "object") {
+            this.board = size.slice();
+        }
     }
     Reversi.prototype.get_possible_movement = function (color) {
         var _this = this;
@@ -155,3 +160,5 @@ var Reversi = /** @class */ (function () {
     return Reversi;
 }());
 exports.Reversi = Reversi;
+// let n: INeighbourg = { coord: { x: 2, y: 3 }, direction: { x: 1, y: 0 } };
+var game = new Reversi(8);

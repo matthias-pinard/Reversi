@@ -36,19 +36,25 @@ class Reversi {
   board: State[][];
   size: number;
 
-  constructor(size: number) {
-    this.size = size;
-    this.board = [];
-    for (let i = 0; i < size; i++) {
-      this.board.push([]);
-      for (let j = 0; j < size; j++) {
-        this.board[i].push(State.Empty);
+  constructor(size: number);
+  constructor(board: object);
+  constructor(size: any) {
+    if(typeof size == "number") {
+      this.size = size;
+      this.board = [];
+      for (let i = 0; i < size; i++) {
+        this.board.push([]);
+        for (let j = 0; j < size; j++) {
+          this.board[i].push(State.Empty);
+        }
       }
+      this.board[size / 2 - 1][size / 2 - 1] = State.White;
+      this.board[size / 2][size / 2] = State.White;
+      this.board[size / 2 - 1][size / 2] = State.Black;
+      this.board[size / 2][size / 2 - 1] = State.Black;
+    } else if(typeof size == "object") {
+      this.board = size.slice();
     }
-    this.board[size / 2 - 1][size / 2 - 1] = State.White;
-    this.board[size / 2][size / 2] = State.White;
-    this.board[size / 2 - 1][size / 2] = State.Black;
-    this.board[size / 2][size / 2 - 1] = State.Black;
   }
 
   get_possible_movement(color: State): IPoint[] {
@@ -127,7 +133,6 @@ class Reversi {
     }
     // the last token is of the player color
     if (this.board[nextPoint.x][nextPoint.y] === color) {
-
       return true;
     }
     return false;
@@ -189,7 +194,7 @@ class Reversi {
 }
 
 // let n: INeighbourg = { coord: { x: 2, y: 3 }, direction: { x: 1, y: 0 } };
-// const game = new Reversi(8);
+const game = new Reversi(8);
 // console.log(game.get_possible_movement(State.Black));
 
 // console.log(game.board);
