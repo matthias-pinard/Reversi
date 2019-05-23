@@ -11,6 +11,7 @@
         <div class="score_player">{{ scoreNoir }}</div>
       </div>
       <div v-if="(this.winner !== '') && (this.equality === false)">
+        <img src="../assets/52183.gif">
         <h3>Winner : {{ this.winner }}</h3>
       </div>
       <div v-else-if="this.equality === true">

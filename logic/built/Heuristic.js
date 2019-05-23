@@ -29,30 +29,11 @@ var Heuristic = /** @class */ (function () {
     Heuristic.prototype.evaluate = function (board, color) {
         return (this.parity(board, color) +
             this.mobility(board, color) +
-            this.corners(board, color) +
-            this.stability(board, color));
+            this.stability(board, color) +
+            this.countCorners(board, color));
     };
-    ;
     Heuristic.prototype.noAvailableMovesEvaluation = function (currentBoard, playerColor) {
         return this.evaluate(currentBoard, playerColor);
-    };
-    Heuristic.prototype.countCones = function (board, color) {
-        var current = 0;
-        for (var i = 0; i < board.length; i++) {
-            var booleans = board[i];
-            {
-                for (var j = 0; j < booleans.length; j++) {
-                    var aBoolean = booleans[j];
-                    {
-                        if (aBoolean != null) {
-                            if (aBoolean === color)
-                                current++;
-                        }
-                    }
-                }
-            }
-        }
-        return current;
     };
     Heuristic.prototype.parity = function (board, color) {
         var game = new reversi_1.Reversi(board);
@@ -61,9 +42,9 @@ var Heuristic = /** @class */ (function () {
         var cOpp = game.get_score(oppColor);
         var score = ((100 * (cCurr - cOpp)) / (cCurr + cOpp)) * this.PARITY_WEIGHT;
         if (cCurr > cOpp) {
-            return -score;
+            return score;
         }
-        return score;
+        return -score;
     };
     Heuristic.prototype.mobility = function (board, color) {
         var game = new reversi_1.Reversi(board);
@@ -75,32 +56,34 @@ var Heuristic = /** @class */ (function () {
         else
             return 0;
     };
-    ;
-    Heuristic.prototype.corners = function (board, color) {
+    Heuristic.prototype.countCorners = function (board, color) {
         var corCurr = 0;
         var corOpp = 0;
-        for (var i = 0; i < 8; i += 7) {
-            {
-                if (board[i][7 - i] != null) {
-                    if (board[i][7 - i] === color)
-                        corCurr++;
-                    else
-                        corOpp++;
-                }
-                if (board[i][i] != null) {
-                    if (board[i][i] === color)
-                        corCurr++;
-                    else
-                        corOpp++;
-                }
+        var size = board.length - 1;
+        var corners = [
+            { x: 0, y: 0 },
+            { x: size, y: 0 },
+            { x: 0, y: size },
+            { x: size, y: size }
+        ];
+        corners.forEach(function (corner) {
+            var oppColor = color == State.Black ? State.White : State.Black;
+            if (board[corner.x][corner.y] == color) {
+                corCurr++;
             }
+            else if (board[corner.x][corner.y] == oppColor) {
+                corOpp++;
+            }
+            console.log("oppopent corner: " + corOpp);
+            console.log("my corner: " + corCurr);
+        });
+        var score = 0;
+        if (corCurr + corOpp !== 0) {
+            score = (100 * (corCurr - corOpp)) / (corCurr + corOpp) * this.CORNERS_WEIGHT;
         }
-        if (corCurr + corOpp !== 0)
-            return (100 * (corCurr - corOpp)) / (corCurr + corOpp);
-        else
-            return 0;
+        console.log(score);
+        return score;
     };
-    ;
     Heuristic.prototype.stability = function (board, color) {
         var result = 0;
         var row = 0;

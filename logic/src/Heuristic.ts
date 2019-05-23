@@ -1,4 +1,4 @@
-import {Reversi} from "./reversi";
+import { Reversi } from "./reversi";
 
 enum State {
   Empty = 0,
@@ -34,46 +34,29 @@ class Heuristic {
     ];
   }
 
-  evaluate(board: State[][], color :State) :number{
+  evaluate(board: State[][], color: State): number {
     return (
       this.parity(board, color) +
       this.mobility(board, color) +
-      this.corners(board, color) +
-      this.stability(board, color)
+      this.stability(board, color) +
+      this.countCorners(board, color)
     );
-  };
+  }
 
   noAvailableMovesEvaluation(currentBoard, playerColor) {
     return this.evaluate(currentBoard, playerColor);
   }
 
-  countCones(board, color) {
-    let current = 0;
-    for (let i = 0; i < board.length; i++) {
-      let booleans = board[i];
-      {
-        for (let j = 0; j < booleans.length; j++) {
-          let aBoolean = booleans[j];
-          {
-            if (aBoolean != null) {
-              if (aBoolean === color) current++;
-            }
-          }
-        }
-      }
-    }
-    return current;
-  }
   parity(board, color) {
     let game = new Reversi(board);
-    let cCurr =  game.get_score(color)
+    let cCurr = game.get_score(color);
     let oppColor = color == State.Black ? State.White : State.Black;
     let cOpp = game.get_score(oppColor);
     let score = ((100 * (cCurr - cOpp)) / (cCurr + cOpp)) * this.PARITY_WEIGHT;
     if (cCurr > cOpp) {
-      return -score;
+      return score;
     }
-    return score;
+    return -score;
   }
 
   mobility(board, color) {
@@ -86,27 +69,35 @@ class Heuristic {
         ((100 * (moCurr - moOpp)) / (moCurr + moOpp)) * this.MOBILITY_WEIGHT
       );
     else return 0;
-  };
+  }
 
-  corners(board, color) {
+  countCorners(board, color) {
     let corCurr = 0;
     let corOpp = 0;
-    for (let i = 0; i < 8; i += 7) {
-      {
-        if (board[i][7 - i] != null) {
-          if (board[i][7 - i] === color) corCurr++;
-          else corOpp++;
-        }
-        if (board[i][i] != null) {
-          if (board[i][i] === color) corCurr++;
-          else corOpp++;
-        }
+    let size = board.length - 1;
+    const corners = [
+      { x: 0, y: 0 },
+      { x: size, y: 0 },
+      { x: 0, y: size },
+      { x: size, y: size }
+    ];
+    corners.forEach(corner => {
+      let oppColor = color == State.Black ? State.White : State.Black;
+      if(board[corner.x][corner.y] == color) {
+          corCurr++;
+      } else if(board[corner.x][corner.y] == oppColor) {
+          corOpp++;
       }
-    }
-    if (corCurr + corOpp !== 0)
-      return (100 * (corCurr - corOpp)) / (corCurr + corOpp);
-    else return 0;
-  };
+      console.log(`oppopent corner: ${corOpp}`);
+      console.log(`my corner: ${corCurr}`);
+
+    });
+    let score = 0;
+    if (corCurr + corOpp !== 0){
+      score =  (100 * (corCurr - corOpp)) / (corCurr + corOpp) * this.CORNERS_WEIGHT;}
+      console.log(score)
+     return score;
+  }
 
   stability(board, color) {
     let result = 0;
@@ -128,10 +119,9 @@ class Heuristic {
     }
     return result * this.STABILITY_WEIGHT;
   }
-
 }
-export {Heuristic};
+export { Heuristic };
 
 let game = new Reversi(8);
 let h = new Heuristic();
-console.log(h.evaluate(game.board, State.Black))
+console.log(h.evaluate(game.board, State.Black));

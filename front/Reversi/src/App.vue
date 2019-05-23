@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Menu v-if="state === 0" :onclick="play"></Menu>
-    <Board v-if="state ===1" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :boardSize="boardSize"></Board>
+    <Board v-if="state ===1" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :boardSize="boardSize" :onclick="restart"></Board>
   </div>
 </template>
 
@@ -29,6 +29,10 @@ export default {
       this.whitePlayer = white
       this.boardSize = Number(size)
       this.state = 1
+    },
+
+    restart: function(){
+      this.state = 0
     }
   }
 }

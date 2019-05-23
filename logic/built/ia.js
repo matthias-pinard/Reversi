@@ -13,23 +13,20 @@ var Heuristic_1 = require("./Heuristic");
 // }
 function nextPlay(board, playable, color) {
     var heuristic = new Heuristic_1.Heuristic();
-    var bestPlay = { score: -100, play: null };
+    var bestPlay = { score: null, play: null };
     for (var i = 0; i < playable.length; i++) {
         var next = playable[i];
-        console.log(next);
         var nextBoard = [];
         for (var j = 0; j < board.length; j++) {
             nextBoard.push(board[j].slice());
         }
         nextBoard[next.x][next.y] = color;
-        var score = heuristic.evaluate(board, color);
-        if (score >= bestPlay.score) {
+        var score = heuristic.evaluate(nextBoard, color);
+        // console.log(`${i} ${score}`);
+        if (bestPlay.score === null || score > bestPlay.score) {
             bestPlay = { score: score, play: next };
         }
     }
     return bestPlay.play;
 }
 exports.nextPlay = nextPlay;
-var reversi_1 = require("./reversi");
-var game = new reversi_1.Reversi(8);
-nextPlay(game.board, game.get_possible_movement(State.Black), State.Black);

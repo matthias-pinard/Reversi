@@ -74,3 +74,15 @@
     background: rgb(211, 209, 209);
     cursor: pointer;
 }
+
+#restart-button {
+    background-color: rgb(144,144,144);
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
