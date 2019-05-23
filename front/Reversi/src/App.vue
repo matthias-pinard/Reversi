@@ -20,14 +20,14 @@ export default {
       state: 0,
       blackPlayer: '',
       whitePlayer: '',
-      boardSize: ''
+      boardSize: 8
     }
   },
   methods: {
     play: function (black, white, size) {
       this.blackPlayer = black
       this.whitePlayer = white
-      this.boardSize = size
+      this.boardSize = Number(size)
       this.state = 1
     }
   }

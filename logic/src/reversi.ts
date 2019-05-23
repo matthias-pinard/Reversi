@@ -127,6 +127,7 @@ class Reversi {
     }
     // the last token is of the player color
     if (this.board[nextPoint.x][nextPoint.y] === color) {
+
       return true;
     }
     return false;

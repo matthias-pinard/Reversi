@@ -16,7 +16,18 @@
       </div>
     </div>
 
+<<<<<<< HEAD
     <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :winner="winner" :equality='equality'></Score>
+=======
+    <Score
+      :current_player="currentPlayer"
+      :scoreNoir="scoreNoir"
+      :scoreBlanc="scoreBlanc"
+      :blackPlayer="blackPlayer"
+      :whitePlayer="whitePlayer"
+      :winner="winner"
+    ></Score>
+>>>>>>> ia random
   </div>
 </template>
 
@@ -24,7 +35,7 @@
 import Reversi from "../../../../logic/built/reversi";
 import Jeton from "./Jeton";
 import Score from "./Score";
-
+import Ia from "./../../../../logic/built/ia";
 const BLANK = 0;
 const BLACK = 1;
 const WHITE = 2;
@@ -51,6 +62,7 @@ export default {
     this.reversi = new rev(this.boardSize);
     this.board = this.reversi.board.slice();
     this.displayPossibleMovement();
+    this.checkIa();
   },
 
   methods: {
@@ -58,19 +70,24 @@ export default {
       const playable = this.possibilies.find(function(element) {
         return element.x === x && element.y === y;
       });
-      this.reversi.play(playable, this.currentPlayer)
+      this.reversi.play(playable, this.currentPlayer);
       this.board = this.reversi.board.slice();
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
-      this.scoreNoir = this.reversi.get_score(1)
-      this.scoreBlanc = this.reversi.get_score(2)
-      this.displayPossibleMovement()
+      this.scoreNoir = this.reversi.get_score(1);
+      this.scoreBlanc = this.reversi.get_score(2);
+      this.displayPossibleMovement();
+
+      this.checkIa();
     },
 
     displayPossibleMovement() {
-      this.possibilies = this.reversi.get_possible_movement(this.currentPlayer).slice()
+      this.possibilies = this.reversi
+        .get_possible_movement(this.currentPlayer)
+        .slice();
 
-      if (this.possibilies.length === 0 && this.currentPlayer === 1){
+      if (this.possibilies.length === 0 && this.currentPlayer === 1) {
         if (this.whiteBlocked === true) {
+<<<<<<< HEAD
           this.highestScore = Math.max(this.reversi.get_score(BLACK), this.reversi.get_score(WHITE))
           if (this.reversi.get_score(BLACK) === this.reversi.get_score(WHITE)) {
             this.equality = true;
@@ -79,14 +96,25 @@ export default {
           } else {
             this.winner = "Orange" //"White"
           }
+=======
+          this.highestScore = Math.max(
+            this.reversi.get_score(BLACK),
+            this.reversi.get_score(WHITE)
+          );
+          this.winner =
+            this.reversi.get_score(BLACK) === this.highestScore
+              ? "Noir"
+              : "Blanc";
+>>>>>>> ia random
         }
         this.blackBlocked = true;
         this.currentPlayer = 2;
         if (!(this.blackBlocked && this.whiteBlocked)) {
           this.displayPossibleMovement();
         }
-      } else if (this.possibilies.length === 0 && this.currentPlayer === 2){
+      } else if (this.possibilies.length === 0 && this.currentPlayer === 2) {
         if (this.blackBlocked === true) {
+<<<<<<< HEAD
           this.highestScore = Math.max(this.reversi.get_score(BLACK), this.reversi.get_score(WHITE))
           if (this.reversi.get_score(BLACK) === this.reversi.get_score(WHITE)) {
             this.equality = true;
@@ -95,6 +123,16 @@ export default {
           } else {
             this.winner = "Orange" //"White"
           }
+=======
+          this.highestScore = Math.max(
+            this.reversi.get_score(BLACK),
+            this.reversi.get_score(WHITE)
+          );
+          this.winner =
+            this.reversi.get_score(BLACK) === this.highestScore
+              ? "Noir"
+              : "Blanc";
+>>>>>>> ia random
         }
         this.whiteBlocked = true;
         this.currentPlayer = 1;
@@ -112,6 +150,19 @@ export default {
         return element.x === x && element.y === y;
       });
       return playable;
+    },
+
+    checkIa() {
+      if (
+        (this.currentPlayer == BLACK && this.blackPlayer == "Computer") ||
+        (this.currentPlayer == WHITE && this.whitePlayer == "Computer")
+      ) {
+        let Ia = require("../../../../logic/built/ia");
+        let next = Ia.nextPlay(this.board, this.possibilies);
+        setTimeout(() => {
+          this.play(next.x, next.y);
+        }, 500);
+      }
     }
   },
 
@@ -121,9 +172,9 @@ export default {
   },
 
   props: {
-     boardSize: { type: Number },
-     blackPlayer: { type: String },
-     whitePlayer: { type: String }
+    boardSize: { type: Number },
+    blackPlayer: { type: String },
+    whitePlayer: { type: String }
   }
 };
 </script>
