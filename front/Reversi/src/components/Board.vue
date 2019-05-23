@@ -16,9 +16,6 @@
       </div>
     </div>
 
-<<<<<<< HEAD
-    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :winner="winner" :equality='equality'></Score>
-=======
     <Score
       :current_player="currentPlayer"
       :scoreNoir="scoreNoir"
@@ -27,7 +24,6 @@
       :whitePlayer="whitePlayer"
       :winner="winner"
     ></Score>
->>>>>>> ia random
   </div>
 </template>
 
@@ -87,16 +83,6 @@ export default {
 
       if (this.possibilies.length === 0 && this.currentPlayer === 1) {
         if (this.whiteBlocked === true) {
-<<<<<<< HEAD
-          this.highestScore = Math.max(this.reversi.get_score(BLACK), this.reversi.get_score(WHITE))
-          if (this.reversi.get_score(BLACK) === this.reversi.get_score(WHITE)) {
-            this.equality = true;
-          } else if (this.reversi.get_score(BLACK) === this.highestScore) {
-            this.winner = "Blue" //"Black"
-          } else {
-            this.winner = "Orange" //"White"
-          }
-=======
           this.highestScore = Math.max(
             this.reversi.get_score(BLACK),
             this.reversi.get_score(WHITE)
@@ -105,7 +91,6 @@ export default {
             this.reversi.get_score(BLACK) === this.highestScore
               ? "Noir"
               : "Blanc";
->>>>>>> ia random
         }
         this.blackBlocked = true;
         this.currentPlayer = 2;
@@ -114,16 +99,6 @@ export default {
         }
       } else if (this.possibilies.length === 0 && this.currentPlayer === 2) {
         if (this.blackBlocked === true) {
-<<<<<<< HEAD
-          this.highestScore = Math.max(this.reversi.get_score(BLACK), this.reversi.get_score(WHITE))
-          if (this.reversi.get_score(BLACK) === this.reversi.get_score(WHITE)) {
-            this.equality = true;
-          } else if (this.reversi.get_score(BLACK) === this.highestScore) {
-            this.winner = "Blue" //"Black"
-          } else {
-            this.winner = "Orange" //"White"
-          }
-=======
           this.highestScore = Math.max(
             this.reversi.get_score(BLACK),
             this.reversi.get_score(WHITE)
@@ -132,7 +107,6 @@ export default {
             this.reversi.get_score(BLACK) === this.highestScore
               ? "Noir"
               : "Blanc";
->>>>>>> ia random
         }
         this.whiteBlocked = true;
         this.currentPlayer = 1;
@@ -161,7 +135,7 @@ export default {
         let next = Ia.nextPlay(this.board, this.possibilies);
         setTimeout(() => {
           this.play(next.x, next.y);
-        }, 500);
+        }, 100);
       }
     }
   },
