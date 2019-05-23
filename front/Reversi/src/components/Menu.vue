@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-      <img src="../assets/Reversi_logo2.jpg" id="main-img">
+      <img src="../assets/Reversi_logo3.jpg" id="main-img">
     <h1>{{ msg }}</h1>
     <div id="game-board"></div>
       <div id="current-player">Players : <span id="current-player-name"></span></div>
@@ -11,8 +11,8 @@
       <div id="preference-pane">
         <div id="player-type-forms">
           <label>
-            <img src="../assets/black.png">
-            Black:
+            <img src="../assets/blue.png">
+            Blue: <!-- Black: -->
             <select id="black-player-type" v-model="bSelected">
               <option value="Human" selected>Human </option>
               <option value="Computer">AI </option>
@@ -20,8 +20,8 @@
           </label>
           &nbsp;&nbsp;&nbsp;
           <label>
-            <img src="../assets/white.png">
-            White:
+            <img src="../assets/orange.png">
+            Orange: <!-- White: -->
             <select id="white-player-type" v-model="wSelected">
               <option value="Human">Human </option>
               <option value="Computer" selected>AI </option>
