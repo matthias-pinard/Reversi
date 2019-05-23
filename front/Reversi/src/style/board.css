@@ -27,6 +27,6 @@
 }
 
 .playable {
-    background: white;
+    background: rgb(211, 209, 209);
     cursor: pointer;
 }

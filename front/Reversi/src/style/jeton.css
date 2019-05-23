@@ -6,8 +6,8 @@
     margin: auto;
 }
 .white {
-    background: orange;
+    background: rgb(255, 115, 0);
 }
 .black {
-    background: blue;
+    background: rgb(0, 89, 255);
 }
