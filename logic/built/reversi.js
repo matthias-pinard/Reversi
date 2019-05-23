@@ -13,14 +13,13 @@ var Color;
 })(Color || (Color = {}));
 var directions = [
     { x: -1, y: -1 },
-    { x: 0, y: 1 },
-    { x: 1, y: 1 },
-    { x: 1, y: 0 },
-    { x: 1, y: -1 },
-    { x: 0, y: 1 },
-    { x: -1, y: -1 },
     { x: -1, y: 0 },
-    { x: -1, y: 1 }
+    { x: -1, y: 1 },
+    { x: 0, y: -1 },
+    { x: 0, y: 1 },
+    { x: 1, y: -1 },
+    { x: 1, y: 0 },
+    { x: 1, y: 1 }
 ];
 var Reversi = /** @class */ (function () {
     function Reversi(size) {
@@ -46,7 +45,7 @@ var Reversi = /** @class */ (function () {
                 neighbourgs.map(function (n) {
                     if (_this.check_in_board(n.coord) &&
                         _this.board[n.coord.x][n.coord.y] == 0 &&
-                        _this.check_line(color, n)) {
+                        _this.check_lines(color, n.coord)) {
                         possible_move.push({
                             x: n.coord.x,
                             y: n.coord.y
@@ -92,14 +91,25 @@ var Reversi = /** @class */ (function () {
         // any number of token can be of the opposite color
         while (this.board[nextPoint.x][nextPoint.y] == this.get_opposite_color(color)) {
             nextPoint.x += direction.x;
-            nextPoint.y += nextPoint.y;
+            nextPoint.y += direction.y;
             if (!this.check_in_board(nextPoint)) {
                 return false;
             }
         }
         // the last token is of the player color
         if (this.board[nextPoint.x][nextPoint.y] === color) {
+            console.log("checked");
             return true;
+        }
+        return false;
+    };
+    Reversi.prototype.check_lines = function (color, point) {
+        for (var i = 0; i < directions.length; i++) {
+            var direction = directions[i];
+            var neigbourg = { coord: point, direction: direction };
+            if (this.check_line(color, neigbourg)) {
+                return true;
+            }
         }
         return false;
     };
@@ -113,12 +123,12 @@ var Reversi = /** @class */ (function () {
         return State.Empty;
     };
     Reversi.prototype.play = function (point, color) {
-        var _this = this;
-        this.board[point.x][point.y] = color;
-        directions.map(function (direction) {
+        for (var i = 0; i < directions.length; i++) {
+            var direction = directions[i];
             var neighbourg = { coord: point, direction: direction };
-            _this.check_and_capture(neighbourg, color);
-        });
+            this.check_and_capture(neighbourg, color);
+        }
+        this.board[point.x][point.y] = color;
     };
     Reversi.prototype.check_and_capture = function (neigbourg, color) {
         var point = neigbourg.coord;
@@ -135,3 +145,5 @@ var Reversi = /** @class */ (function () {
     return Reversi;
 }());
 exports.Reversi = Reversi;
+// let n: INeighbourg = { coord: { x: 2, y: 3 }, direction: { x: 1, y: 0 } };
+var game = new Reversi(8);
