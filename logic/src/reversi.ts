@@ -127,7 +127,7 @@ class Reversi {
     }
     // the last token is of the player color
     if (this.board[nextPoint.x][nextPoint.y] === color) {
-      console.log("checked")
+      console.log("checked");
       return true;
     }
     return false;
@@ -179,10 +179,12 @@ class Reversi {
     let score = 0;
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
-        if(this.board[i][j] == color) {
+        if (this.board[i][j] == color) {
           score++;
         }
       }
+    }
+    return score
   }
 }
 
