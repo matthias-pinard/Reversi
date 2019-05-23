@@ -1,9 +1,9 @@
 <template>
   <div class="menu">
-    <img src="../assets/Reversi_logo2.jpg">
+      <img src="../assets/Reversi_logo2.jpg" id="main-img">
     <h1>{{ msg }}</h1>
     <div id="game-board"></div>
-      <div id="current-player">Player: <span id="current-player-name"></span></div>
+      <div id="current-player">Players : <span id="current-player-name"></span></div>
       <br />
       <div id="message"></div>
       <div id="console"></div>
@@ -27,9 +27,20 @@
               <option value="Computer" selected>AI </option>
             </select>
           </label>
+          <br />
+          <br />
+          <label>
+            Board size:
+            <select id="board-size" v-model="sizeSelected">
+              <option value="4">4x4</option>
+              <option value="6">6x6</option>
+              <option value="8" selected>8x8</option>
+            </select>
+          </label>
         </div>
         <br />
-        <button id="start-button" class="btn btn-primary" type="submit" @click='onclick(bSelected, wSelected)'>Start a new game</button>
+        <br />
+        <button id="start-button" class="btn btn-primary" type="submit" @click='onclick(bSelected, wSelected, sizeSelected)'>Start a new game</button>
       </div>
   </div>
 </template>
@@ -41,7 +52,8 @@ export default {
     return {
       msg: 'Reversi',
       bSelected: 'Human',
-      wSelected: 'Computer'
+      wSelected: 'Computer',
+      sizeSelected: '8'
     }
   },
   props: {
@@ -55,12 +67,21 @@ export default {
 h1 {
   font-weight: bold;
 }
-#black-player-type, #white-player-type {
-    color: rgb(144,144,144);
-    background: rgb(35,35,35)
+#black-player-type, #white-player-type, #board-size {
+    color: black;
+    background: rgb(144,144,144)
 }
 #start-button{
-    color: rgb(144,144,144);
-    background: rgb(35,35,35)
+    background-color: rgb(144,144,144);
+    border: none;
+    color: black;
+    padding: 13px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+#main-img {
+  border: solid 2px rgb(144,144,144);
 }
 </style>

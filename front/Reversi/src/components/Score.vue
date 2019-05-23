@@ -8,6 +8,7 @@
       </div>
       <div>
         <h2 :class=" { current_player : this.current_player === 2 }">Orange</h2>
+
         <div class="score_player">{{ scoreBlanc }}</div>
       </div>
     </div>
@@ -20,8 +21,10 @@
 export default {
     props: {
         current_player: { type: Number },
-        scoreNoir: {type : Number },
-        scoreBlanc: {type : Number }
+        scoreNoir: { type: Number },
+        scoreBlanc: { type: Number },
+        blackPlayer: { type: String },
+        whitePlayer: { type: String }
     }
 };
 </script>

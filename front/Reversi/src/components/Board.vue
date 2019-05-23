@@ -2,11 +2,11 @@
   <div>
     <div class="board-container">
       <div class="board">
-        <div v-for="(row, x) in board" :key="row">
+        <div v-for="(row, x) in board" :key="x">
           <div
             class="cell"
             v-for="(cell, y) in row"
-            :key="cell"
+            :key="y"
             :class="{ playable: checkPlayable(x, y) }"
             @click="play(x, y)"
           >
@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc"></Score>
+    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer"></Score>
   </div>
 </template>
 
@@ -37,13 +37,13 @@ export default {
       possibilies: [],
       board: [],
       scoreNoir: 2,
-      scoreBlanc: 2
+      scoreBlanc: 2,
     };
   },
 
   mounted: function() {
     const rev = require("../../../../logic/built/reversi").Reversi;
-    this.reversi = new rev(8);
+    this.reversi = new rev(this.boardSize);
     this.board = this.reversi.board.slice();
     this.displayPossibleMovement();
   },
@@ -53,16 +53,14 @@ export default {
       const playable = this.possibilies.find(function(element) {
         return element.x === x && element.y === y;
       });
-      console.log(playable);
       this.reversi.play(playable, this.currentPlayer)
       this.board = this.reversi.board.slice();
-      console.log(this.board);
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
       this.displayPossibleMovement()
     },
 
     displayPossibleMovement() {
-      this.possibilies = this.reversi.get_possible_movement(this.currentPlayer);
+      this.possibilies = this.reversi.get_possible_movement(this.currentPlayer).slice();
     },
 
     checkPlayable: function(x, y) {
@@ -76,6 +74,12 @@ export default {
   components: {
     Jeton,
     Score
+  },
+
+  props: {
+     boardSize: { type: Number },
+     blackPlayer: { type: String },
+     whitePlayer: { type: String }
   }
 };
 </script>
