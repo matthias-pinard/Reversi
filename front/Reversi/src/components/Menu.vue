@@ -69,7 +69,8 @@ h1 {
 }
 #black-player-type, #white-player-type, #board-size {
     color: black;
-    background: rgb(144,144,144)
+    background: rgb(144,144,144);
+    cursor: pointer;
 }
 #start-button{
     background-color: rgb(144,144,144);
@@ -80,6 +81,7 @@ h1 {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    cursor: pointer;
 }
 #main-img {
   border: solid 2px rgb(144,144,144);
