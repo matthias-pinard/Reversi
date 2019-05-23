@@ -6,9 +6,11 @@
         <h2 :class=" { current_player : this.current_player === 1 }">Bleu</h2>
         <div class="score_player">{{ scoreNoir }}</div>
       </div>
+      <div v-if="this.winner !== ''">
+        <h3>Gagnant : {{ winner }}</h3>
+      </div>
       <div>
         <h2 :class=" { current_player : this.current_player === 2 }">Orange</h2>
-
         <div class="score_player">{{ scoreBlanc }}</div>
       </div>
     </div>
@@ -24,7 +26,8 @@ export default {
         scoreNoir: { type: Number },
         scoreBlanc: { type: Number },
         blackPlayer: { type: String },
-        whitePlayer: { type: String }
+        whitePlayer: { type: String },
+        winner: { type: String }
     }
 };
 </script>

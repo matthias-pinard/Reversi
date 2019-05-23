@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer"></Score>
+    <Score :current_player="currentPlayer" :scoreNoir="scoreNoir" :scoreBlanc="scoreBlanc" :blackPlayer="blackPlayer" :whitePlayer="whitePlayer" :winner="winner"></Score>
   </div>
 </template>
 
@@ -38,6 +38,10 @@ export default {
       board: [],
       scoreNoir: 2,
       scoreBlanc: 2,
+      whiteBlocked: false,
+      blackBlocked: false,
+      highestScore: 0,
+      winner: ""
     };
   },
 
@@ -62,7 +66,32 @@ export default {
     },
 
     displayPossibleMovement() {
-      this.possibilies = this.reversi.get_possible_movement(this.currentPlayer).slice();
+      this.possibilies = this.reversi.get_possible_movement(this.currentPlayer).slice()
+
+      if (this.possibilies.length === 0 && this.currentPlayer === 1){
+        if (this.whiteBlocked === true) {
+          this.highestScore = Math.max(this.reversi.get_score(BLACK), this.reversi.get_score(WHITE))
+          this.winner = (this.reversi.get_score(BLACK) === this.highestScore) ? "Noir" : "Blanc";
+        }
+        this.blackBlocked = true;
+        this.currentPlayer = 2;
+        if (!(this.blackBlocked && this.whiteBlocked)) {
+          this.displayPossibleMovement();
+        }
+      } else if (this.possibilies.length === 0 && this.currentPlayer === 2){
+        if (this.blackBlocked === true) {
+          this.highestScore = Math.max(this.reversi.get_score(BLACK), this.reversi.get_score(WHITE))
+          this.winner = (this.reversi.get_score(BLACK) === this.highestScore) ? "Noir" : "Blanc";
+        }
+        this.whiteBlocked = true;
+        this.currentPlayer = 1;
+        if (!(this.blackBlocked && this.whiteBlocked)) {
+          this.displayPossibleMovement();
+        }
+      } else {
+        this.blackBlocked = false;
+        this.whiteBlocked = false;
+      }
     },
 
     checkPlayable: function(x, y) {
