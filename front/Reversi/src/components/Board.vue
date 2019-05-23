@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="board-container">
+    <div :class="'board-container'+this.result()">
       <div :class="'board'+this.boardSize">
         <div v-for="(row, x) in board" :key="x">
           <div
@@ -62,6 +62,18 @@ export default {
   },
 
   methods: {
+    result() {
+      if (this.winner === "") {
+        return this.currentPlayer;
+      } else if (this.winner === "Blue") {
+        return 1;
+      } else if (this.winner === "Orange") {
+        return 2;
+      } else if (this.equality) {
+        return 3;
+      }
+    },
+
     play(x, y) {
       const playable = this.possibilies.find(function(element) {
         return element.x === x && element.y === y;

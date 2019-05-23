@@ -2,8 +2,12 @@
   <div class="dashboard">
     <h1>Score</h1>
     <div class="score_container">
-      <div>
-        <h2 :class=" { current_player_1 : this.current_player === 1 }">Blue</h2>
+      <div v-if="winner !== 'Blue'">
+        <h2 class="current_player_1">Blue</h2>
+        <div class="score_player">{{ scoreNoir }}</div>
+      </div>
+      <div v-else>
+        <h2 class="current_player_1_win">Blue</h2>
         <div class="score_player">{{ scoreNoir }}</div>
       </div>
       <div v-if="(this.winner !== '') && (this.equality === false)">
@@ -12,8 +16,12 @@
       <div v-else-if="this.equality === true">
         <h3>Draw</h3>
       </div>
-      <div>
-        <h2 :class=" { current_player_2 : this.current_player === 2 }">Orange</h2>
+      <div v-if="winner !== 'Orange'">
+        <h2 class="current_player_2">Orange</h2>
+        <div class="score_player">{{ scoreBlanc }}</div>
+      </div>
+      <div v-else>
+        <h2 class="current_player_2_win">Orange</h2>
         <div class="score_player">{{ scoreBlanc }}</div>
       </div>
     </div>
