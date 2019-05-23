@@ -127,7 +127,7 @@ class Reversi {
     }
     // the last token is of the player color
     if (this.board[nextPoint.x][nextPoint.y] === color) {
-      console.log("checked");
+
       return true;
     }
     return false;
@@ -184,12 +184,12 @@ class Reversi {
         }
       }
     }
-    return score
+    return score;
   }
 }
 
 // let n: INeighbourg = { coord: { x: 2, y: 3 }, direction: { x: 1, y: 0 } };
-const game = new Reversi(8);
+// const game = new Reversi(8);
 // console.log(game.get_possible_movement(State.Black));
 
 // console.log(game.board);

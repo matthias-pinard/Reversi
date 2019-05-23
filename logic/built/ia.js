@@ -4,4 +4,4 @@ function nextPlay(board, playable) {
     var rand = playable[Math.floor(Math.random() * playable.length)];
     return rand;
 }
-exports.default = nextPlay;
+exports.nextPlay = nextPlay;

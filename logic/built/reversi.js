@@ -98,7 +98,6 @@ var Reversi = /** @class */ (function () {
         }
         // the last token is of the player color
         if (this.board[nextPoint.x][nextPoint.y] === color) {
-            console.log("checked");
             return true;
         }
         return false;
@@ -156,5 +155,3 @@ var Reversi = /** @class */ (function () {
     return Reversi;
 }());
 exports.Reversi = Reversi;
-// let n: INeighbourg = { coord: { x: 2, y: 3 }, direction: { x: 1, y: 0 } };
-var game = new Reversi(8);
