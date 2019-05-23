@@ -142,6 +142,17 @@ var Reversi = /** @class */ (function () {
             }
         }
     };
+    Reversi.prototype.get_score = function (color) {
+        var score = 0;
+        for (var i = 0; i < this.size; i++) {
+            for (var j = 0; j < this.size; j++) {
+                if (this.board[i][j] == color) {
+                    score++;
+                }
+            }
+        }
+        return score;
+    };
     return Reversi;
 }());
 exports.Reversi = Reversi;
