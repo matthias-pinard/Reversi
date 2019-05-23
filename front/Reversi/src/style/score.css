@@ -33,7 +33,7 @@ h2 {
 
 @keyframes blink_blue {
     0% { background: #fff; }
-    100% { background: rgb(0, 89, 255); }
+    100% { background: rgb(30, 79, 134); }
   }
 
 .current_player_1 {
