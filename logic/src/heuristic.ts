@@ -96,6 +96,7 @@ class Heuristic {
     let corCurr1=0;
     let corOpp1=0;
     let oppColor = color == State.Black ? State.White : State.Black;
+    
     if(board[0][0] == '-'){
         if(board[0][1] == color) {
             corCurr1++;
@@ -112,51 +113,51 @@ class Heuristic {
         }
 
     }
-    if(board[0][7] == '-'){
-        if(board[0][6] == color) {
+    if(board[0][size] == '-'){
+        if(board[0][size-1] == color) {
             corCurr1++;
-        } else if(board[0][6] == oppColor) {
+        } else if(board[0][size-1] == oppColor) {
             corOpp1++;
-        }else if(board[1][6] == color) {
+        }else if(board[1][size-1] == color) {
             corCurr1++;
-        } else if(board[1][6] == oppColor) {
+        } else if(board[1][size-1] == oppColor) {
             corOpp1++;
-        } else if(board[1][7] == color) {
+        } else if(board[1][size] == color) {
             corCurr1++;
-        } else if(board[1][7] == oppColor) {
-            corOpp1++;
-        }
-
-    }
-    if(board[7][0] == '-'){
-        if(board[7][1] == color) {
-            corCurr1++;
-        } else if(board[7][1] == oppColor) {
-            corOpp1++;
-        }else if(board[6][1] == color) {
-            corCurr1++;
-        } else if(board[6][1] == oppColor) {
-            corOpp1++;
-        } else if(board[6][0] == color) {
-            corCurr1++;
-        } else if(board[6][0] == oppColor) {
+        } else if(board[1][size] == oppColor) {
             corOpp1++;
         }
 
     }
+    if(board[size][0] == '-'){
+        if(board[size][1] == color) {
+            corCurr1++;
+        } else if(board[size][1] == oppColor) {
+            corOpp1++;
+        }else if(board[size-1][1] == color) {
+            corCurr1++;
+        } else if(board[size-1][1] == oppColor) {
+            corOpp1++;
+        } else if(board[size-1][0] == color) {
+            corCurr1++;
+        } else if(board[size-1][0] == oppColor) {
+            corOpp1++;
+        }
 
-    if(board[7][7] == '-'){
-        if(board[6][7] == color) {
+    }
+
+    if(board[size][size] == '-'){
+        if(board[size-1][size] == color) {
             corCurr1++;
-        } else if(board[6][7] == oppColor) {
+        } else if(board[size-1][size] == oppColor) {
             corOpp1++;
-        }else if(boar[6][6] == color) {
+        }else if(boar[size-1][size-1] == color) {
             corCurr1++;
-        } else if(board[6][6] == oppColor) {
+        } else if(board[size-1][size-1] == oppColor) {
             corOpp1++;
-        } else if(board[7][6] == color) {
+        } else if(board[size][size-1] == color) {
             corCurr1++;
-        } else if(board[7][6] == oppColor) {
+        } else if(board[size][size-1] == oppColor) {
             corOpp1++;
         }
 
