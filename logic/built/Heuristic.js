@@ -10,7 +10,7 @@ var State;
 var Heuristic = /** @class */ (function () {
     function Heuristic() {
         this.NO_MOVES_PENALTY = 20;
-        this.CORNERS_WEIGHT = 801.724;
+        this.CORNERS_WEIGHT = 8010.724;
         this.NEAR_CORNERS_WEIGHT = 382.026;
         this.STABILITY_WEIGHT = 10;
         this.PARITY_WEIGHT = 10;
@@ -31,9 +31,6 @@ var Heuristic = /** @class */ (function () {
             this.mobility(board, color) +
             this.stability(board, color) +
             this.countCorners(board, color));
-    };
-    Heuristic.prototype.noAvailableMovesEvaluation = function (currentBoard, playerColor) {
-        return this.evaluate(currentBoard, playerColor);
     };
     Heuristic.prototype.parity = function (board, color) {
         var game = new reversi_1.Reversi(board);

@@ -17,7 +17,7 @@ class Heuristic {
 
   constructor() {
     this.NO_MOVES_PENALTY = 20;
-    this.CORNERS_WEIGHT = 801.724;
+    this.CORNERS_WEIGHT = 8010.724;
     this.NEAR_CORNERS_WEIGHT = 382.026;
     this.STABILITY_WEIGHT = 10;
     this.PARITY_WEIGHT = 10;
@@ -41,10 +41,6 @@ class Heuristic {
       this.stability(board, color) +
       this.countCorners(board, color)
     );
-  }
-
-  noAvailableMovesEvaluation(currentBoard, playerColor) {
-    return this.evaluate(currentBoard, playerColor);
   }
 
   parity(board, color) {

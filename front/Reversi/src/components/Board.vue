@@ -163,7 +163,7 @@ export default {
         (this.currentPlayer == WHITE && this.whitePlayer == "Computer")
       ) {
         let Ia = require("../../../../logic/built/ia");
-        let next = Ia.nextPlay(this.board, this.possibilies, this.currentPlayer);
+        let next = Ia.nextPlay(this.board, this.currentPlayer);
         setTimeout(() => {
           this.play(next.x, next.y);
         }, 300);
