@@ -17,7 +17,7 @@ class Heuristic {
 
   constructor() {
     this.NO_MOVES_PENALTY = 20;
-    this.CORNERS_WEIGHT = 8010.724;
+    this.CORNERS_WEIGHT = 801.724;
     this.NEAR_CORNERS_WEIGHT = 382.026;
     this.STABILITY_WEIGHT = 10;
     this.PARITY_WEIGHT = 10;
@@ -41,6 +41,10 @@ class Heuristic {
       this.stability(board, color) +
       this.countCorners(board, color)
     );
+  }
+
+  noAvailableMovesEvaluation(currentBoard, playerColor) {
+    return this.evaluate(currentBoard, playerColor);
   }
 
   parity(board, color) {
@@ -68,6 +72,7 @@ class Heuristic {
   }
 
   countCorners(board, color) {
+    let c=0;
     let corCurr = 0;
     let corOpp = 0;
     let size = board.length - 1;
@@ -84,13 +89,86 @@ class Heuristic {
       } else if(board[corner.x][corner.y] == oppColor) {
           corOpp++;
       }
-      // console.log(`oppopent corner: ${corOpp}`);
-      // console.log(`my corner: ${corCurr}`);
+      console.log(`oppopent corner: ${corOpp}`);
+      console.log(`my corner: ${corCurr}`);
 
     });
+    let corCurr1=0;
+    let corOpp1=0;
+    let oppColor = color == State.Black ? State.White : State.Black;
+    
+    if(board[0][0] == '-'){
+        if(board[0][1] == color) {
+            corCurr1++;
+        } else if(board[0][1] == oppColor) {
+            corOpp1++;
+        }else if(board[1][1] == color) {
+            corCurr1++;
+        } else if(board[1][1] == oppColor) {
+            corOpp1++;
+        } else if(board[1][0] == color) {
+            corCurr1++;
+        } else if(board[1][0] == oppColor) {
+            corOpp1++;
+        }
+
+    }
+    if(board[0][size] == '-'){
+        if(board[0][size-1] == color) {
+            corCurr1++;
+        } else if(board[0][size-1] == oppColor) {
+            corOpp1++;
+        }else if(board[1][size-1] == color) {
+            corCurr1++;
+        } else if(board[1][size-1] == oppColor) {
+            corOpp1++;
+        } else if(board[1][size] == color) {
+            corCurr1++;
+        } else if(board[1][size] == oppColor) {
+            corOpp1++;
+        }
+
+    }
+    if(board[size][0] == '-'){
+        if(board[size][1] == color) {
+            corCurr1++;
+        } else if(board[size][1] == oppColor) {
+            corOpp1++;
+        }else if(board[size-1][1] == color) {
+            corCurr1++;
+        } else if(board[size-1][1] == oppColor) {
+            corOpp1++;
+        } else if(board[size-1][0] == color) {
+            corCurr1++;
+        } else if(board[size-1][0] == oppColor) {
+            corOpp1++;
+        }
+
+    }
+
+    if(board[size][size] == '-'){
+        if(board[size-1][size] == color) {
+            corCurr1++;
+        } else if(board[size-1][size] == oppColor) {
+            corOpp1++;
+        }else if(board[size-1][size-1] == color) {
+            corCurr1++;
+        } else if(board[size-1][size-1] == oppColor) {
+            corOpp1++;
+        } else if(board[size][size-1] == color) {
+            corCurr1++;
+        } else if(board[size][size-1] == oppColor) {
+            corOpp1++;
+        }
+
+    }
+
+    let l = (-12.5)*(corCurr1 - corOpp1);
+
     let score = 0;
+    c= 25 *(corCurr - corOpp)
     if (corCurr + corOpp !== 0){
-      score =  100 * ((corCurr - corOpp) / (corCurr + corOpp)) * this.CORNERS_WEIGHT ;}
+      score =  c*this.CORNERS_WEIGHT + l * this.NEAR_CORNERS_WEIGHT}
       console.log(score)
      return score;
   }

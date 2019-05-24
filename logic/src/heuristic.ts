@@ -151,7 +151,7 @@ class Heuristic {
             corCurr1++;
         } else if(board[size-1][size] == oppColor) {
             corOpp1++;
-        }else if(boar[size-1][size-1] == color) {
+        }else if(board[size-1][size-1] == color) {
             corCurr1++;
         } else if(board[size-1][size-1] == oppColor) {
             corOpp1++;
