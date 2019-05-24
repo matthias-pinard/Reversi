@@ -71,12 +71,12 @@ var Heuristic = /** @class */ (function () {
             else if (board[corner.x][corner.y] == oppColor) {
                 corOpp++;
             }
-            console.log("oppopent corner: " + corOpp);
-            console.log("my corner: " + corCurr);
+            // console.log(`oppopent corner: ${corOpp}`);
+            // console.log(`my corner: ${corCurr}`);
         });
         var score = 0;
         if (corCurr + corOpp !== 0) {
-            score = (100 * (corCurr - corOpp)) / (corCurr + corOpp) * this.CORNERS_WEIGHT;
+            score = 100 * ((corCurr - corOpp) / (corCurr + corOpp)) * this.CORNERS_WEIGHT;
         }
         console.log(score);
         return score;
