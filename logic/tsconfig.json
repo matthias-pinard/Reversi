@@ -4,6 +4,7 @@
         "allowJs": true,
         "target": "es5",
         "noImplicitReturns": true,
+        "lib": ["es2015", "es2016", "dom"]
     },
     "include": [
         "./src/**/*"

@@ -63,7 +63,17 @@ var Reversi = /** @class */ (function () {
                 });
             }
         }
-        return possible_move;
+        var filtered_moves = [];
+        var _loop_1 = function (i) {
+            var move = possible_move[i];
+            if (!filtered_moves.some(function (elem) { return elem.x === move.x && elem.y === move.y; })) {
+                filtered_moves.push(move);
+            }
+        };
+        for (var i = 0; i < possible_move.length; i++) {
+            _loop_1(i);
+        }
+        return filtered_moves;
     };
     Reversi.prototype.check_in_board = function (point) {
         return (point.x < this.size && point.x >= 0 && point.y < this.size && point.y >= 0);

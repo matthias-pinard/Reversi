@@ -11,10 +11,16 @@ enum State {
 
 type Board = State[][];
 
-type Tree<T> = {
-  value: T;
-  branchs: Tree<T>[];
+type BoardTree = {
+  board: Board,
+  play:  IPoint,
+  branchs: BoardTree[];
 };
+
+type mmVal = {
+  score: number,
+  play: IPoint
+}
 
 import { Heuristic } from "./Heuristic";
 import { Reversi } from "./reversi";
@@ -23,54 +29,27 @@ import { Reversi } from "./reversi";
 //   return rand;
 // }
 
-function nextPlay(board: Board, color: State) {
-  let game = new Reversi(board);
-  let playable = game.get_possible_movement(color);
-
-  let heuristic = new Heuristic();
-  let bestPlay = { score: null, play: null };
-
-  for (let i = 0; i < playable.length; i++) {
-    let next = playable[i];
-    let next_game = new Reversi(board)
-    next_game.play(next, color)
-    let nextBoard = next_game.board
-    let score = heuristic.evaluate(nextBoard, color);
-    // console.log(`${i} ${score}`);
-    if (bestPlay.score === null || score > bestPlay.score) {
-      bestPlay = { score: score, play: next };
-    }
-  }
-  return bestPlay.play;
-}
-
-function copy_board(board: Board): Board {
-  var nextBoard = [];
-  for (var j = 0; j < board.length; j++) {
-    nextBoard.push(board[j].slice());
-  }
-  return board;
-}
-
-function anticipate(board: Board, color: State) {
-  let game = new Reversi(board);
-  let playables = nextPlay(board, color);
+function nextPlay(board: Board, color: State): IPoint {
+  let  board_tree = { board: board, play:null, branchs: [] };
+  create_board_tree_recur(board_tree, color, 3);
+  let play = minmax(board_tree, 10, true, color)
+  return play.play;
 }
 
 function create_board_tree_recur(
-  board_tree: Tree<Board>,
+  board_tree: BoardTree,
   color: State,
   depth: number
-): Tree<Board> {
+): BoardTree {
   //let tree: Tree<Board> = {value: board, branchs: []}
   if (depth != 0) {
-    let board = board_tree.value;
+    let board = board_tree.board;
     let game = new Reversi(board);
     let playables = game.get_possible_movement(color);
-    let new_board = copy_board(board);
     playables.forEach(play => {
-      new_board[play.x][play.y] = color;
-      board_tree.branchs.push({ value: new_board, branchs: [] });
+      let game = new Reversi(board);
+      game.play(play, color);
+      board_tree.branchs.push({ board: game.board, play: play, branchs: [] });
     });
     let opp_color = color == State.Black ? State.White : State.Black;
     board_tree.branchs.forEach(tree => {
@@ -80,47 +59,48 @@ function create_board_tree_recur(
   return board_tree;
 }
 
-function evaluate_tree_recur(
-  board_tree: Tree<Board>,
-  score_tree: Tree<number>,
+function minmax(
+  board_tree: BoardTree,
+  depth: number,
+  maximazingPlayer: boolean,
   color: State
-): Tree<Number> {
-  let h = new Heuristic();
-  let score = h.evaluate(board_tree.value, color);
-  score_tree = { value: score, branchs: [] };
-
-  board_tree.branchs.forEach((tree, i) => {
-    if (tree.branchs.length !== 0) {
-      let opp_color = color == State.Black ? State.White : State.Black;
-      evaluate_tree_recur(tree, score_tree.branchs[i], opp_color);
+): mmVal {
+  if (depth == 0 || board_tree.branchs.length == 0) {
+    let h = new Heuristic();
+    return {score: h.evaluate(board_tree.board, color), play: board_tree.play};
+  }
+  if (maximazingPlayer) {
+    let value: mmVal = {score: -1000000, play: null};
+    for(let i = 0; i < board_tree.branchs.length; i++) {
+      let subtree = board_tree.branchs[i];
+      let mm = minmax(subtree, depth - 1, false, color)
+      let nextValue = Math.max(value.score, mm.score) 
+        if(nextValue > value.score) {
+          value = {score: nextValue, play:subtree.play}
+        }
+      }
+    return value;
+    
+  } else {
+    let value: mmVal = {score: 1000000, play: null};
+    for(let i = 0; i < board_tree.branchs.length; i++) {
+      let subtree = board_tree.branchs[i];
+      let mm = minmax(subtree, depth - 1, true, color)
+      let nextValue = Math.min(value.score, mm.score) 
+        if(nextValue < value.score) {
+          value = {score: nextValue, play:subtree.play}
+        }
+      }
+    return value;
     }
-  });
-  return score_tree;
-}
+  }
 
-function evaluate_score_tree(
-  board_tree: Tree<Board>,
-  color: State
-): Tree<number> {
-  let tree = { value: 0, branchs: [] };
-  let score_tree = evaluate_tree_recur(board_tree, tree, color);
-  return tree;
-}
+  function print_game(board_tree: BoardTree) {
+    while(board_tree.branchs.length != 0) {
+      console.log(board_tree.board);
+      board_tree = board_tree.branchs[0]
+    }
+    console.log(board_tree.board);
 
-function evaluate_board(board: Board, color: State): Tree<number> {
-  let board_tree = create_board_tree_recur(
-    { value: board, branchs: [] },
-    color,
-    4
-  );
-  let score_tree = evaluate_score_tree(board_tree, color);
-  return score_tree;
-}
+  }
 export { nextPlay };
-
-let game = new Reversi(8);
-console.log(game.board)
-let board_tree = {value: game.board, branchs: []};
-create_board_tree_recur(board_tree, State.Black, 4)
-//let board_tree = evaluate_board(game.board, State.Black);
-console.log(board_tree);

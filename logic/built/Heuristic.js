@@ -75,8 +75,6 @@ var Heuristic = /** @class */ (function () {
             else if (board[corner.x][corner.y] == oppColor) {
                 corOpp++;
             }
-            console.log("oppopent corner: " + corOpp);
-            console.log("my corner: " + corCurr);
         });
         var corCurr1 = 0;
         var corOpp1 = 0;
@@ -167,7 +165,7 @@ var Heuristic = /** @class */ (function () {
         if (corCurr + corOpp !== 0) {
             score = c * this.CORNERS_WEIGHT + l * this.NEAR_CORNERS_WEIGHT;
         }
-        console.log(score);
+        // console.log(score)
         return score;
     };
     Heuristic.prototype.stability = function (board, color) {
@@ -193,6 +191,6 @@ var Heuristic = /** @class */ (function () {
     return Heuristic;
 }());
 exports.Heuristic = Heuristic;
-var game = new reversi_1.Reversi(8);
-var h = new Heuristic();
-console.log(h.evaluate(game.board, State.Black));
+// let game = new Reversi(8);
+// let h = new Heuristic();
+// console.log(h.evaluate(game.board, State.Black));

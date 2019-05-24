@@ -79,9 +79,16 @@ class Reversi {
           }
         });
       }
+      
     }
-
-    return possible_move;
+    let filtered_moves = [];
+    for(let i = 0; i < possible_move.length; i++) {
+      let move = possible_move[i];
+      if(!filtered_moves.some(elem => {return elem.x === move.x && elem.y === move.y})) {
+        filtered_moves.push(move)
+      }
+    }
+    return filtered_moves
   }
 
   check_in_board(point: IPoint): boolean {

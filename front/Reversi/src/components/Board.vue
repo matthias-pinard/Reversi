@@ -32,7 +32,7 @@
 import Reversi from "../../../../logic/built/reversi";
 import Jeton from "./Jeton";
 import Score from "./Score";
-import Ia from "./../../../../logic/built/ia";
+import {nextPlay} from "./../../../../logic/built/ia";
 
 const BLANK = 0;
 const BLACK = 1;
@@ -98,13 +98,20 @@ export default {
         x: x,
         y: y
       }
-      this.checkIa()
+            if (
+        (this.currentPlayer == BLACK && this.blackPlayer == "Computer") ||
+        (this.currentPlayer == WHITE && this.whitePlayer == "Computer")
+      ) {
+        setTimeout(() => {      this.checkIa()
+}, 300)
+      }
     },
 
     displayPossibleMovement() {
       this.possibilies = this.reversi
         .get_possible_movement(this.currentPlayer)
         .slice();
+        console.log(JSON.stringify(this.possibilies))
 
       if (this.possibilies.length === 0 && this.currentPlayer === 1) {
         if (this.whiteBlocked === true) {
@@ -162,8 +169,7 @@ export default {
         (this.currentPlayer == BLACK && this.blackPlayer == "Computer") ||
         (this.currentPlayer == WHITE && this.whitePlayer == "Computer")
       ) {
-        let Ia = require("../../../../logic/built/ia");
-        let next = Ia.nextPlay(this.board, this.currentPlayer);
+        let next = nextPlay(this.board, this.currentPlayer)
         setTimeout(() => {
           this.play(next.x, next.y);
         }, 300);

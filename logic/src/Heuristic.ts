@@ -89,8 +89,6 @@ class Heuristic {
       } else if(board[corner.x][corner.y] == oppColor) {
           corOpp++;
       }
-      console.log(`oppopent corner: ${corOpp}`);
-      console.log(`my corner: ${corCurr}`);
 
     });
     let corCurr1=0;
@@ -169,7 +167,7 @@ class Heuristic {
     c= 25 *(corCurr - corOpp)
     if (corCurr + corOpp !== 0){
       score =  c*this.CORNERS_WEIGHT + l * this.NEAR_CORNERS_WEIGHT}
-      console.log(score)
+      // console.log(score)
      return score;
   }
 
@@ -194,8 +192,11 @@ class Heuristic {
     return result * this.STABILITY_WEIGHT;
   }
 }
+
+
+}
 export { Heuristic };
 
-let game = new Reversi(8);
-let h = new Heuristic();
-console.log(h.evaluate(game.board, State.Black));
+// let game = new Reversi(8);
+// let h = new Heuristic();
+// console.log(h.evaluate(game.board, State.Black));
